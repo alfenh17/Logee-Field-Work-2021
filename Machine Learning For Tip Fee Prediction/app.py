@@ -27,7 +27,6 @@ html_temp = """
 </div>
 """
 st.markdown(html_temp, unsafe_allow_html=True)
-st.info("⚠️ This is the beta version of Logee Trans Trip Fee Prediction App!")
 
 # =========================================================
 # LOAD MODEL & ENCODER
@@ -118,7 +117,7 @@ if st.button('Check'):
         prediction = model.predict(df)[0]
         harga = f"Rp. {int(prediction):,}".replace(',', '.')
 
-        st.markdown(f"## 💰 {harga}")
+        st.markdown(f"## {harga}")
         st.success("Prediksi berhasil!")
 
         with st.expander("Lihat Feature Input"):
