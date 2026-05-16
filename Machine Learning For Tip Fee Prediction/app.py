@@ -40,7 +40,7 @@ def load_artifacts():
     return model, encoder_item, encoder_vehicle
 
 try:
-    catboost, encoder_item, encoder_vehicle = load_artifacts()
+    model, encoder_item, encoder_vehicle = load_artifacts()
 except Exception as e:
     st.error(f"Gagal load model/encoder: {e}")
     st.stop()
@@ -109,13 +109,13 @@ if st.button('Check'):
         df = df.drop(['vehicleGroupName', 'itemPackage'], axis=1)
 
         # HANDLE MISSING FEATURES & REORDER
-        for col in catboost.feature_names_:
+        for col in model.feature_names_:
             if col not in df.columns:
                 df[col] = 0
-        df = df[catboost.feature_names_]
+        df = df[model.feature_names_]
 
         # PREDICT
-        prediction = catboost.predict(df)[0]
+        prediction = model.predict(df)[0]
         harga = f"Rp. {int(prediction):,}".replace(',', '.')
 
         st.markdown(f"## 💰 {harga}")
